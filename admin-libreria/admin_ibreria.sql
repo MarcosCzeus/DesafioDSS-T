@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 21-01-2023 a las 16:30:53
--- Versión del servidor: 10.4.24-MariaDB
--- Versión de PHP: 8.1.6
+-- Servidor: 127.0.0.1:3309
+-- Tiempo de generación: 07-05-2024 a las 02:04:31
+-- Versión del servidor: 8.0.31
+-- Versión de PHP: 8.0.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,11 +27,13 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `author`
 --
 
-CREATE TABLE `author` (
-  `authorid` int(11) NOT NULL,
-  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `status` enum('Enable','Disable') COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+DROP TABLE IF EXISTS `author`;
+CREATE TABLE IF NOT EXISTS `author` (
+  `authorid` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `status` enum('Enable','Disable') CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  PRIMARY KEY (`authorid`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `author`
@@ -48,20 +50,22 @@ INSERT INTO `author` (`authorid`, `name`, `status`) VALUES
 -- Estructura de tabla para la tabla `book`
 --
 
-CREATE TABLE `book` (
-  `bookid` int(11) NOT NULL,
-  `categoryid` int(11) NOT NULL,
-  `authorid` int(11) NOT NULL,
-  `rackid` int(11) NOT NULL,
-  `name` text COLLATE utf8_unicode_ci NOT NULL,
-  `picture` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
-  `publisherid` int(11) NOT NULL,
-  `isbn` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
-  `no_of_copy` int(5) NOT NULL,
-  `status` enum('Enable','Disable') COLLATE utf8_unicode_ci NOT NULL,
-  `added_on` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_on` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+DROP TABLE IF EXISTS `book`;
+CREATE TABLE IF NOT EXISTS `book` (
+  `bookid` int NOT NULL AUTO_INCREMENT,
+  `categoryid` int NOT NULL,
+  `authorid` int NOT NULL,
+  `rackid` int NOT NULL,
+  `name` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `picture` varchar(250) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `publisherid` int NOT NULL,
+  `isbn` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `no_of_copy` int NOT NULL,
+  `status` enum('Enable','Disable') CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `added_on` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_on` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`bookid`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `book`
@@ -78,11 +82,13 @@ INSERT INTO `book` (`bookid`, `categoryid`, `authorid`, `rackid`, `name`, `pictu
 -- Estructura de tabla para la tabla `category`
 --
 
-CREATE TABLE `category` (
-  `categoryid` int(11) NOT NULL,
-  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `status` enum('Enable','Disable') COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE IF NOT EXISTS `category` (
+  `categoryid` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `status` enum('Enable','Disable') CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  PRIMARY KEY (`categoryid`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `category`
@@ -101,15 +107,17 @@ INSERT INTO `category` (`categoryid`, `name`, `status`) VALUES
 -- Estructura de tabla para la tabla `issued_book`
 --
 
-CREATE TABLE `issued_book` (
-  `issuebookid` int(11) NOT NULL,
-  `bookid` int(11) NOT NULL,
-  `userid` int(11) NOT NULL,
-  `issue_date_time` datetime NOT NULL DEFAULT current_timestamp(),
+DROP TABLE IF EXISTS `issued_book`;
+CREATE TABLE IF NOT EXISTS `issued_book` (
+  `issuebookid` int NOT NULL AUTO_INCREMENT,
+  `bookid` int NOT NULL,
+  `userid` int NOT NULL,
+  `issue_date_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `expected_return_date` datetime NOT NULL,
   `return_date_time` datetime NOT NULL,
-  `status` enum('Issued','Returned','Not Return') COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `status` enum('Issued','Returned','Not Return') CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  PRIMARY KEY (`issuebookid`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `issued_book`
@@ -125,11 +133,13 @@ INSERT INTO `issued_book` (`issuebookid`, `bookid`, `userid`, `issue_date_time`,
 -- Estructura de tabla para la tabla `publisher`
 --
 
-CREATE TABLE `publisher` (
-  `publisherid` int(11) NOT NULL,
+DROP TABLE IF EXISTS `publisher`;
+CREATE TABLE IF NOT EXISTS `publisher` (
+  `publisherid` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `status` enum('Enable','Disable') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `status` enum('Enable','Disable') NOT NULL,
+  PRIMARY KEY (`publisherid`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `publisher`
@@ -152,11 +162,13 @@ INSERT INTO `publisher` (`publisherid`, `name`, `status`) VALUES
 -- Estructura de tabla para la tabla `rack`
 --
 
-CREATE TABLE `rack` (
-  `rackid` int(11) NOT NULL,
-  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `status` enum('Enable','Disable') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Enable'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+DROP TABLE IF EXISTS `rack`;
+CREATE TABLE IF NOT EXISTS `rack` (
+  `rackid` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `status` enum('Enable','Disable') CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL DEFAULT 'Enable',
+  PRIMARY KEY (`rackid`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `rack`
@@ -172,14 +184,16 @@ INSERT INTO `rack` (`rackid`, `name`, `status`) VALUES
 -- Estructura de tabla para la tabla `user`
 --
 
-CREATE TABLE `user` (
-  `id` int(11) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `first_name` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(64) NOT NULL,
-  `role` enum('admin','user') DEFAULT 'admin'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `role` enum('admin','user') DEFAULT 'admin',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Volcado de datos para la tabla `user`
@@ -189,98 +203,6 @@ INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `password`, `role`
 (2, 'Pedro', 'Usuario', 'pusuario@cweb.com', '4b67deeb9aba04a5b54632ad19934f26', 'user'),
 (3, 'Juan', 'Usuario', 'jusuario@cweb.com', '4b67deeb9aba04a5b54632ad19934f26', 'user'),
 (4, 'Mauricio', 'Sevilla', 'hola@configuroweb.com', '4b67deeb9aba04a5b54632ad19934f26', 'admin');
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `author`
---
-ALTER TABLE `author`
-  ADD PRIMARY KEY (`authorid`);
-
---
--- Indices de la tabla `book`
---
-ALTER TABLE `book`
-  ADD PRIMARY KEY (`bookid`);
-
---
--- Indices de la tabla `category`
---
-ALTER TABLE `category`
-  ADD PRIMARY KEY (`categoryid`);
-
---
--- Indices de la tabla `issued_book`
---
-ALTER TABLE `issued_book`
-  ADD PRIMARY KEY (`issuebookid`);
-
---
--- Indices de la tabla `publisher`
---
-ALTER TABLE `publisher`
-  ADD PRIMARY KEY (`publisherid`);
-
---
--- Indices de la tabla `rack`
---
-ALTER TABLE `rack`
-  ADD PRIMARY KEY (`rackid`);
-
---
--- Indices de la tabla `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `author`
---
-ALTER TABLE `author`
-  MODIFY `authorid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de la tabla `book`
---
-ALTER TABLE `book`
-  MODIFY `bookid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de la tabla `category`
---
-ALTER TABLE `category`
-  MODIFY `categoryid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT de la tabla `issued_book`
---
-ALTER TABLE `issued_book`
-  MODIFY `issuebookid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `publisher`
---
-ALTER TABLE `publisher`
-  MODIFY `publisherid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT de la tabla `rack`
---
-ALTER TABLE `rack`
-  MODIFY `rackid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `user`
---
-ALTER TABLE `user`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
